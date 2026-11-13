@@ -4,6 +4,7 @@ env:
   MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
   MONGO_USERNAME: superuser
   MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+  GITHUB_USER: x0Mars0x
 
 on: 
   workflow_dispatch:
@@ -67,4 +68,22 @@ jobs:
             name: Code-Coverage-Result
             path: coverage
             retention-days: 5
+   docker:
+        name: docker
+        runs-on: ubuntu-latest
+        needs: unit-testing, code-coverage
+        steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: Login to Docker Hub
+          uses: docker/login-action@v4
+          with:
+            registry: ghcr.io
+            username: ${{ env.GITHUB_USER }}
+            password: GITHUB_TOKEN
+        - name: Build and push
+          uses: docker/build-push-action@v7
+          with:
+            push: true
+            tags: ghcr.io/${{ GITHUB_USER }}/solar-system:${{ github.sha }}
 
