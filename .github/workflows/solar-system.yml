@@ -69,7 +69,7 @@ jobs:
             path: coverage
             retention-days: 5
             
-   docker:
+    docker:
         name: Build docker file
         runs-on: ubuntu-latest
         needs: [unit-testing, code-coverage]
