@@ -92,8 +92,7 @@ jobs:
         steps:
         - name: Cluster Action
           uses: helm/kind-action@v1
-        - name: Run Action
-          run: |
+        - run: |
            	  sleep 60
               kubectl -n kube-system get pod
               set +e
