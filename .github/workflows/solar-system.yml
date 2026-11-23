@@ -93,9 +93,9 @@ jobs:
         - name: Cluster Action
           uses: helm/kind-action@v1
         - run: |
-           	  sleep 60
+              sleep 60
               kubectl -n kube-system get pod
-              set +e
+              set +e  
               REPO_OWNER_LC="${GITHUB_REPOSITORY_OWNER,,}"
               kubectl run solar --image ghcr.io/${REPO_OWNER_LC}/solar-system:${{ github.sha }} \
                --env MONGO_URI=${{ env.MONGO_URI}} \
